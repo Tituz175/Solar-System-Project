@@ -1,6 +1,7 @@
 document.body.style.backgroundImage = "url('images/galaxy.gif')";
 document.body.style.fontFamily = "Montserrat";
 
+// my variables
 const headerElement = document.querySelector("header");
 const inputContainer = document.querySelector("#inputContainer");
 const massInput = document.getElementById("mass");
@@ -14,17 +15,31 @@ const description = document.querySelector(".description");
 const desContainer = document.querySelector(".description div");
 const resultTitle = document.querySelector(".description div h2");
 const result = document.querySelector(".description div h3");
+let mass;
+const gravities = [3.6, 8.9, 10, 3.8, 26, 11.1, 10.7, 14.1, 0.42, 1.7];
+let gravity;
+let planet;
+let errorMessagestatus = false;
+let errorElement;
+let planetName;
+let planetImage;
+let imagePath;
+let calculatedMass;
+let resultTitlestatus = false;
 
+// styling of the header section
 headerElement.style.textAlign = "center";
 headerElement.style.color = "white";
 headerElement.style.fontSize = "25px";
 
+// styling of inputs container element
 inputContainer.style.display = "flex";
 inputContainer.style.justifyContent = "space-around";
 inputContainer.style.width = "45%";
 inputContainer.style.margin = "10px auto";
 inputContainer.style.boxSizing = "border-box";
 
+// styling of mass input element
 massInput.style.width = "35%";
 massInput.style.height = "auto";
 massInput.style.fontSize = "20px";
@@ -34,6 +49,7 @@ massInput.style.border = "0px";
 massInput.style.borderRadius = "5px";
 massInput.style.outline = "none";
 
+// styling of select options for the masses
 planetInput.style.width = "35%";
 planetInput.style.height = "auto";
 planetInput.style.fontSize = "20px";
@@ -43,6 +59,7 @@ planetInput.style.border = "0px";
 planetInput.style.borderRadius = "5px";
 planetInput.style.outline = "none";
 
+// styling of the calculater button
 button.style.width = "25%";
 button.style.height = "auto";
 button.style.fontSize = "25px";
@@ -54,9 +71,10 @@ button.style.outline = "none";
 button.style.color = "white";
 button.style.backgroundColor = "gray";
 
+// styling of the main section of the page
 mainSection.style.textAlign = "center";
-mainSection.style.border = "1px solid red";
 
+// styling of the result container 
 flexContainer.style.borderRadius = "10px";
 flexContainer.style.backgroundColor = "rgba(191,191,191,0.2)";
 flexContainer.style.display = "flex";
@@ -66,23 +84,29 @@ flexContainer.style.margin = "2% auto";
 flexContainer.style.padding = "30px 15px";
 flexContainer.style.boxSizing = "border-box";
 
+// styling of the image container
 imgContainer.style.width = "35%";
 
+// styling of the image element
 img.style.width = "100%";
 
+// styling of result container
 description.style.color = "white";
 description.style.width = "50%";
 description.style.display = "none";
 description.style.justifyContent = "center";
 description.style.alignItems = "center";
 
+// styling of result title and result container
 desContainer.style.backgroundColor = "rgba(191,191,191,0.2)";
 desContainer.style.width = "100%";
 desContainer.style.padding = "20px 0px";
 desContainer.style.borderRadius = "10px";
 
+// styling of result title
 resultTitle.style.fontWeight = "300";
 
+// styling of result value
 result.style.backgroundColor = "rgba(191,191,191,0.2)";
 result.style.borderRadius = "50%";
 result.style.width = "130px";
@@ -93,7 +117,7 @@ result.style.alignItems = "center";
 result.style.margin = "5px auto 20px";
 result.style.fontSize = "20px";
 
-let mass;
+// function to check the mass value is a numeric value
 let checkNumeric = () => {
   mass = parseInt(massInput.value);
   if (isNaN(mass) == true) {
@@ -103,10 +127,7 @@ let checkNumeric = () => {
   }
 };
 
-const gravities = [3.6, 8.9, 10, 3.8, 26, 11.1, 10.7, 14.1, 0.42, 1.7];
-let gravity;
-
-let planet;
+// function to check planet selected or not selected
 let checkPlanet = () => {
   planet = planetInput.value;
   switch (planet) {
@@ -145,8 +166,7 @@ let checkPlanet = () => {
   }
 };
 
-let errorMessagestatus = false;
-let errorElement;
+// function for error message
 let errorMessage = (type) => {
   errorElement = document.createElement("h2");
   errorElement.setAttribute("id", "errorMessage");
@@ -161,7 +181,7 @@ let errorMessage = (type) => {
   errorMessagestatus = true;
 };
 
-let planetName;
+// this function create, format and style the planet name element 
 let namePlanet = (image) => {
   planetName = document.createElement("span");
   planetName.textContent = `${image}`;
@@ -169,20 +189,19 @@ let namePlanet = (image) => {
   resultTitle.appendChild(planetName);
 };
 
-let planetImage;
-let imagePath;
+// this function create, format and style the planet image element
 let imagePlanet = (image) => {
   planetImage = `${image.toLowerCase()}.png`;
   imagePath = `images/${planetImage}`;
   img.setAttribute("src", imagePath);
 };
 
-let calculatedMass;
+// this function calculate the mass of the object in Newton
 let massCal = (gravityValue) => {
   calculatedMass = Math.ceil(mass * parseFloat(gravityValue));
 };
 
-let resultTitlestatus = false;
+// this function combines the imagePlanet, namePlanet and massCal functions
 let totalResult = (image) => {
   imagePlanet(image);
   if (resultTitlestatus == true) {
@@ -196,6 +215,7 @@ let totalResult = (image) => {
   description.style.display = "flex";
 };
 
+// this is the eventListener trigger by the button
 button.addEventListener("click", () => {
   if (checkNumeric()) {
     if (checkPlanet()) {
